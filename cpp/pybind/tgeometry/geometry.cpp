@@ -24,44 +24,36 @@
 // IN THE SOFTWARE.
 // ----------------------------------------------------------------------------
 
-#include "pybind/open3d_pybind.h"
+#include "open3d/tgeometry/Geometry.h"
 
-#include "open3d/utility/Console.h"
-#include "pybind/camera/camera.h"
-#include "pybind/core/core.h"
-#include "pybind/geometry/geometry.h"
-#include "pybind/io/io.h"
-#include "pybind/pipelines/pipelines.h"
 #include "pybind/tgeometry/geometry.h"
-#include "pybind/utility/utility.h"
-#include "pybind/visualization/visualization.h"
 
 namespace open3d {
+namespace tgeometry {
 
-PYBIND11_MODULE(pybind, m) {
-    open3d::utility::Logger::i().print_fcn_ = [](const std::string& msg) {
-        py::print(msg);
-    };
+// Geometry trampoline class.
+template <class GeometryBase = Geometry>
+class PyGeometry : public GeometryBase {
+public:
+    using GeometryBase::GeometryBase;
 
-    m.doc() = "Python binding of Open3D";
+    GeometryBase& Clear() override {
+        PYBIND11_OVERLOAD_PURE(GeometryBase&, GeometryBase, );
+    }
 
-    // Check Open3D CXX11_ABI with
-    // import open3d as o3d; print(o3d.open3d_pybind._GLIBCXX_USE_CXX11_ABI)
-    m.add_object("_GLIBCXX_USE_CXX11_ABI",
-                 _GLIBCXX_USE_CXX11_ABI ? Py_True : Py_False);
+    bool IsEmpty() const override {
+        PYBIND11_OVERLOAD_PURE(bool, GeometryBase, );
+    }
+};
 
-    // The binding order matters: if a class haven't been binded, binding the
-    // user of this class will result in "could not convert default argument
-    // into a Python object" error.
-    pybind_utility(m);
+void pybind_geometry(py::module& m) {
+    py::module m_submodule = m.def_submodule("tgeometry");
 
-    pybind_camera(m);
-    pybind_core(m);
-    pybind_geometry(m);
-    tgeometry::pybind_geometry(m);  // TODO: add namespace to other bindings.
-    pybind_io(m);
-    pybind_pipelines(m);
-    pybind_visualization(m);
+    // Geometry class.
+
+    // Sub classes.
+    pybind_pointcloud(m_submodule);
 }
 
+}  // namespace tgeometry
 }  // namespace open3d
