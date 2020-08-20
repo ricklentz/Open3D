@@ -70,10 +70,11 @@ public:
         Object,
     };
 
-    ObjDtype(DtypeCode dtype_code, int64_t byte_size)
-        : dtype_code_(dtype_code), byte_size_(byte_size) {
+    ObjDtype(DtypeCode dtype_code, int64_t byte_size, const std::string name)
+        : dtype_code_(dtype_code), byte_size_(byte_size), name_(name) {
         (void)dtype_code_;
         (void)byte_size_;
+        (void)name_;
     }
 
     /// Convert from C++ types to Dtype. Known types are explicitly specialized,
@@ -87,9 +88,12 @@ public:
 
     int64_t ByteSize() const { return byte_size_; }
 
+    std::string ToString() const { return name_; }
+
 private:
     DtypeCode dtype_code_;
     int64_t byte_size_;
+    std::string name_;
 };
 
 template <>
