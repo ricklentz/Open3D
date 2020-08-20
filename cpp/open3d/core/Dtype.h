@@ -97,6 +97,36 @@ inline ObjDtype ObjDtype::FromType<float>() {
     return ObjDtype::Float32;
 }
 
+template <>
+inline ObjDtype ObjDtype::FromType<double>() {
+    return ObjDtype::Float64;
+}
+
+template <>
+inline ObjDtype ObjDtype::FromType<int32_t>() {
+    return ObjDtype::Int32;
+}
+
+template <>
+inline ObjDtype ObjDtype::FromType<int64_t>() {
+    return ObjDtype::Int64;
+}
+
+template <>
+inline ObjDtype ObjDtype::FromType<uint8_t>() {
+    return ObjDtype::UInt8;
+}
+
+template <>
+inline ObjDtype ObjDtype::FromType<uint16_t>() {
+    return ObjDtype::UInt16;
+}
+
+template <>
+inline ObjDtype ObjDtype::FromType<bool>() {
+    return ObjDtype::Bool;
+}
+
 enum class Dtype {
     Undefined,  // Dtype for uninitialized Tensor
     Float32,
