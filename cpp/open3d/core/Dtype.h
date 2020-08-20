@@ -51,6 +51,16 @@ namespace core {
 
 class ObjDtype {
 public:
+    static const ObjDtype Undefined;
+    static const ObjDtype Float32;
+    static const ObjDtype Float64;
+    static const ObjDtype Int32;
+    static const ObjDtype Int64;
+    static const ObjDtype UInt8;
+    static const ObjDtype UInt16;
+    static const ObjDtype Bool;
+
+public:
     enum class DtypeCode {
         Undefined,
         Bool,  // Needed to distinguish bool from uint8_t.
@@ -66,18 +76,26 @@ public:
         (void)byte_size_;
     }
 
-    static const ObjDtype Float32;
-    static const ObjDtype Float64;
-    static const ObjDtype Int32;
-    static const ObjDtype Int64;
-    static const ObjDtype UInt8;
-    static const ObjDtype UInt16;
-    static const ObjDtype Bool;
+    /// Convert from C++ types to Dtype. Known types are explicitly specialized,
+    /// e.g. DtypeUtil::FromType<float>(). Unsupported type will result in an
+    /// exception.
+    template <typename T>
+    static inline ObjDtype FromType() {
+        utility::LogError("Unsupported data type");
+        return ObjDtype::Undefined;
+    }
+
+    int64_t ByteSize() const { return byte_size_; }
 
 private:
     DtypeCode dtype_code_;
     int64_t byte_size_;
 };
+
+template <>
+inline ObjDtype ObjDtype::FromType<float>() {
+    return ObjDtype::Float32;
+}
 
 enum class Dtype {
     Undefined,  // Dtype for uninitialized Tensor

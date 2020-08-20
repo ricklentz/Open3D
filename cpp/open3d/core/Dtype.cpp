@@ -30,6 +30,8 @@
 namespace open3d {
 namespace core {
 
+const ObjDtype ObjDtype::Undefined =
+        ObjDtype(ObjDtype::DtypeCode::Undefined, 1);
 const ObjDtype ObjDtype::Float32 = ObjDtype(ObjDtype::DtypeCode::Float, 4);
 const ObjDtype ObjDtype::Float64 = ObjDtype(ObjDtype::DtypeCode::Float, 8);
 const ObjDtype ObjDtype::Int32 = ObjDtype(ObjDtype::DtypeCode::Int, 4);
