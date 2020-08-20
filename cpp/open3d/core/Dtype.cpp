@@ -30,7 +30,13 @@
 namespace open3d {
 namespace core {
 
-const ObjDtype ObjDtype::Float32 = ObjDtype(DtypeCode::Float, 4);
+const ObjDtype ObjDtype::Float32 = ObjDtype(ObjDtype::DtypeCode::Float, 4);
+const ObjDtype ObjDtype::Float64 = ObjDtype(ObjDtype::DtypeCode::Float, 8);
+const ObjDtype ObjDtype::Int32 = ObjDtype(ObjDtype::DtypeCode::Int, 4);
+const ObjDtype ObjDtype::Int64 = ObjDtype(ObjDtype::DtypeCode::Int, 8);
+const ObjDtype ObjDtype::UInt8 = ObjDtype(ObjDtype::DtypeCode::UInt, 1);
+const ObjDtype ObjDtype::UInt16 = ObjDtype(ObjDtype::DtypeCode::UInt, 2);
+const ObjDtype ObjDtype::Bool = ObjDtype(ObjDtype::DtypeCode::Bool, 1);
 
 }  // namespace core
 }  // namespace open3d

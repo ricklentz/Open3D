@@ -49,18 +49,18 @@ static_assert(sizeof(bool) == 1, "Unsupported platform: bool must be 1 byte.");
 namespace open3d {
 namespace core {
 
-enum class DtypeCode {
-    Undefined,
-    Bool,  // Needed to distinguish bool from uint8_t.
-    Int,
-    UInt,
-    Float,
-    Object,
-};
-
 class ObjDtype {
 public:
-    ObjDtype(DtypeCode dtype_code, int byte_size)
+    enum class DtypeCode {
+        Undefined,
+        Bool,  // Needed to distinguish bool from uint8_t.
+        Int,
+        UInt,
+        Float,
+        Object,
+    };
+
+    ObjDtype(DtypeCode dtype_code, int64_t byte_size)
         : dtype_code_(dtype_code), byte_size_(byte_size) {
         (void)dtype_code_;
         (void)byte_size_;
@@ -76,7 +76,7 @@ public:
 
 private:
     DtypeCode dtype_code_;
-    int byte_size_;
+    int64_t byte_size_;
 };
 
 enum class Dtype {
